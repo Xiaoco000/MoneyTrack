@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MoneyTrack</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- HALAMAN LOGIN / REGISTER -->
+  <div id="authSection" class="auth-card">
+    <div class="logo-icon">🤍🪙</div>
+    <h2>MoneyTrack</h2>
+    <p>Kelola Keuangan dengan Tenang & Rapi</p>
+
+    <div class="form-group">
+      <input type="email" id="userEmail" placeholder="Masukkan Alamat Email" required>
+      <button id="sendOtpBtn" class="btn-primary"  >Kirim Link Login</button>
+    </div>
+
+    <p id="authMessage" class="status-msg"></p>
+  </div>
+
+  <!-- HALAMAN DASHBOARD (Muncul setelah Login) -->
+  <div id="appSection" class="app-container hidden">
+
+    <header class="app-header">
+      <div>
+        <span class="greeting">Selamat Datang 👋</span>
+        <h3 id="userDisplay">user@email.com</h3>
+      </div>
+      <button id="logoutBtn" class="btn-icon">🚪</button>
+    </header>
+
+    <!-- Kartu Total Saldo Warm Coffee -->
+    <section class="balance-card">
+      <span class="card-label">TOTAL SALDO</span>
+      <h1 id="balance">Rp 0</h1>
+
+      <div class="summary-box">
+        <div class="summary-item income">
+          <span>Pemasukan</span>
+          <h4 id="income">Rp 0</h4>
+        </div>
+        <div class="divider"></div>
+        <div class="summary-item expense">
+          <span>Pengeluaran</span>
+          <h4 id="expense">Rp 0</h4>
+        </div>
+      </div>
+    </section>
+
+    <!-- Form Transaksi -->
+    <section class="form-card">
+      <h3>Catat Transaksi Baru</h3>
+      <form id="transactionForm">
+        <input type="text" id="title" placeholder="Nama Transaksi (contoh: Kopi, Gaji)" required>
+        <input type="number" id="amount" placeholder="Nominal (Rp)" required>
+        
+        <div class="select-row">
+          <select id="type">
+            <option value="expense">Pengeluaran (-)</option>
+            <option value="income">Pemasukan (+)</option>
+          </select>
+
+          <select id="category">
+            <option>Makanan & Kopi</option>
+            <option>Belanja</option>
+            <option>Transportasi</option>
+            <option>Gaji / Usaha</option>
+            <option>Tagihan</option>
+            <option>Lainnya</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-primary">+ Simpan Catatan</button>
+      </form>
+    </section>
+
+    <!-- Riwayat Transaksi -->
+    <section class="history-card">
+      <div class="history-header">
+        <h3>Riwayat Keuangan</h3>
+        <button id="clearBtn" class="btn-text">Hapus Semua</button>
+      </div>
+      <ul id="transactionList" class="transaction-list"></ul>
+    </section>
+
+  </div>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
