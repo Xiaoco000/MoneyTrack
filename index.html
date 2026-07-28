@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MoneyTrack - Pencatat Keuangan</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Halaman Auth / Login Google -->
+    <div id="authSection" class="card">
+      <div class="auth-header">
+        <span class="logo-emoji">🤍 🪙</span>
+        <h2>MoneyTrack</h2>
+        <p>Kelola Keuangan dengan Tenang & Rapi</p>
+      </div>
+
+      <div class="auth-form">
+        <button id="sendOtpBtn" class="btn btn-google">
+          🚀 Login dengan Google
+        </button>
+        <p id="authMessage" class="auth-msg"></p>
+      </div>
+    </div>
+
+    <!-- Halaman Utama Dashboard (Setelah Login) -->
+    <div id="appSection" class="card hidden">
+      <div class="user-bar">
+        <span>Halo, <strong id="userDisplay">...</strong></span>
+        <button id="logoutBtn" class="btn-logout">Keluar</button>
+      </div>
+
+      <!-- Ringkasan Saldo -->
+      <div class="balance-card">
+        <small>Total Saldo Kamu</small>
+        <h1 id="balance">Rp 0</h1>
+        <div class="summary-grid">
+          <div class="summary-item income">
+            <small>Pemasukan</small>
+            <span id="income">Rp 0</span>
+          </div>
+          <div class="summary-item expense">
+            <small>Pengeluaran</small>
+            <span id="expense">Rp 0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Tambah Transaksi -->
+      <form id="transactionForm" class="trans-form">
+        <h3>+ Tambah Catatan</h3>
+        <input type="text" id="title" placeholder="Keterangan (misal: Beli Kopi)" required>
+        <input type="number" id="amount" placeholder="Nominal (Rp)" required>
+        
+        <div class="form-row">
+          <select id="type">
+            <option value="expense">Pengeluaran (-)</option>
+            <option value="income">Pemasukan (+)</option>
+          </select>
+          <select id="category">
+            <option value="Makanan">Makanan</option>
+            <option value="Transport">Transport</option>
+            <option value="Gaji">Gaji</option>
+            <option value="Hiburan">Hiburan</option>
+            <option value="Lainnya">Lainnya</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn">Simpan Transaksi</button>
+      </form>
+
+      <!-- Riwayat Transaksi -->
+      <div class="history-section">
+        <h3>Riwayat Transaksi</h3>
+        <ul id="transactionList" class="trans-list">
+          <!-- Data transaksi akan dimuat secara otomatis di sini -->
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
