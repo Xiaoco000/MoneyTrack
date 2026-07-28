@@ -1,0 +1,246 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: #f7f1eb; /* Krem Halus */
+  color: #5c4d43; /* Cokelat Warm */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 16px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* AUTH / LOGIN CARD */
+.auth-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 380px;
+  padding: 36px 24px;
+  border-radius: 28px;
+  box-shadow: 0 15px 35px rgba(189, 169, 154, 0.15);
+  text-align: center;
+}
+
+.logo-icon {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.auth-card h2 {
+  color: #4a3b32;
+  font-size: 22px;
+}
+
+.auth-card p {
+  font-size: 12px;
+  color: #a39285;
+  margin-bottom: 24px;
+}
+
+/* APP DASHBOARD */
+.app-container {
+  width: 100%;
+  max-width: 410px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 4px;
+}
+
+.greeting {
+  font-size: 11px;
+  color: #a39285;
+}
+
+.app-header h3 {
+  font-size: 14px;
+  color: #4a3b32;
+}
+
+.btn-icon {
+  background: #ffffff;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+}
+
+/* BALANCE CARD (Warm Coffee Gradient) */
+.balance-card {
+  background: linear-gradient(135deg, #d3b8a3 0%, #b8977e 100%);
+  color: #ffffff;
+  padding: 24px 20px;
+  border-radius: 24px;
+  box-shadow: 0 12px 25px rgba(184, 151, 126, 0.25);
+  text-align: center;
+}
+
+.card-label {
+  font-size: 11px;
+  letter-spacing: 1px;
+  opacity: 0.85;
+}
+
+.balance-card h1 {
+  font-size: 30px;
+  margin: 6px 0 18px 0;
+  font-weight: 600;
+}
+
+.summary-box {
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(8px);
+  border-radius: 16px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.summary-item {
+  flex: 1;
+}
+
+.summary-item span {
+  font-size: 11px;
+  display: block;
+  opacity: 0.9;
+}
+
+.summary-item h4 {
+  font-size: 14px;
+  margin-top: 2px;
+}
+
+.divider {
+  width: 1px;
+  height: 25px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* FORM CARD */
+.form-card, .history-card {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 22px;
+  box-shadow: 0 10px 25px rgba(224, 212, 202, 0.2);
+}
+
+.form-card h3, .history-header h3 {
+  font-size: 14px;
+  color: #4a3b32;
+  margin-bottom: 12px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.select-row {
+  display: flex;
+  gap: 8px;
+}
+
+input, select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #ebdcd0;
+  background: #faf6f3;
+  color: #5c4d43;
+  font-size: 13px;
+  outline: none;
+}
+
+input:focus, select:focus {
+  border-color: #b8977e;
+}
+
+.btn-primary {
+  background: #b8977e;
+  color: #ffffff;
+  border: none;
+  padding: 13px;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(184, 151, 126, 0.3);
+}
+
+/* HISTORY LIST */
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-text {
+  background: none;
+  border: none;
+  color: #c97a7a;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.transaction-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: #faf6f3;
+  border-radius: 12px;
+}
+
+.item-info span {
+  display: block;
+}
+
+.item-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: #4a3b32;
+}
+
+.item-category {
+  font-size: 10px;
+  color: #a39285;
+}
+
+.amount.income { color: #6bb081; font-weight: 600; }
+.amount.expense { color: #d97777; font-weight: 600; }
+
+.btn-del {
+  background: none;
+  border: none;
+  color: #c4b5a5;
+  margin-left: 8px;
+  cursor: pointer;
+}
