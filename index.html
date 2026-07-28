@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MoneyTrack - Social Expense Tracker</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Remixicon untuk Ikon Modern -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- HEADER -->
+    <header class="app-header">
+      <div class="user-info">
+        <div class="avatar"><i class="ri-user-3-line"></i></div>
+        <div>
+          <span class="greeting">Selamat Datang</span>
+          <h4 id="user-display">Pengguna</h4>
+        </div>
+      </div>
+      <button class="icon-btn" id="btn-logout" title="Keluar"><i class="ri-logout-box-r-line"></i></button>
+    </header>
+
+    <!-- AREA KONTEN -->
+    <main class="content-area">
+      
+      <!-- PAGE: HOME / RINGKASAN -->
+      <section id="page-home" class="page active">
+        <div class="card summary-card">
+          <span class="card-label">Sisa Saldo / Arus Kas</span>
+          <h2 id="net-balance">Rp 0</h2>
+          
+          <div class="stats-grid">
+            <div class="stat-item income">
+              <i class="ri-arrow-down-circle-line"></i>
+              <div>
+                <span>Pemasukan</span>
+                <p id="total-income">Rp 0</p>
+              </div>
+            </div>
+            <div class="stat-item expense">
+              <i class="ri-arrow-up-circle-line"></i>
+              <div>
+                <span>Pengeluaran</span>
+                <p id="total-expense">Rp 0</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-header">
+          <div class="section-title">Transaksi Terakhir</div>
+          <a href="#" class="see-all" onclick="switchPage('history', document.querySelectorAll('.nav-item')[1])">Lihat Semua</a>
+        </div>
+
+        <ul class="transaction-list" id="recent-transactions">
+          <li class="empty-state">Memuat transaksi...</li>
+        </ul>
+      </section>
+
+      <!-- PAGE: RIWAYAT TRANSAKSI -->
+      <section id="page-history" class="page">
+        <div class="section-title">Semua Catatan Keuangan</div>
+        <div class="filter-bar">
+          <button class="filter-chip active" onclick="filterTransactions('all', this)">Semua</button>
+          <button class="filter-chip" onclick="filterTransactions('expense', this)">Pengeluaran</button>
+          <button class="filter-chip" onclick="filterTransactions('income', this)">Pemasukan</button>
+        </div>
+        <ul class="transaction-list" id="all-transactions">
+          <li class="empty-state">Memuat riwayat...</li>
+        </ul>
+      </section>
+
+      <!-- PAGE: SOCIAL (FEED & KOMUNITAS) -->
+      <section id="page-social" class="page">
+        <div class="section-header">
+          <div class="section-title">Aktivitas Teman</div>
+          <button class="btn-sm" onclick="alert('Fitur Tambah Teman segera hadir!')">+ Teman</button>
+        </div>
+
+        <!-- Feed Contoh -->
+        <div class="feed-list">
+          <div class="feed-card">
+            <div class="feed-header">
+              <div class="avatar-sm">A</div>
+              <div>
+                <strong class="feed-author">@arya</strong>
+                <span class="feed-time">2 jam yang lalu</span>
+              </div>
+            </div>
+            <p class="feed-content">Berhasil nabung Rp 500.000 bulan ini untuk rakit PC baru! 🎯</p>
+            <div class="feed-actions">
+              <button><i class="ri-heart-line"></i> 12 Like</button>
+              <button><i class="ri-chat-3-line"></i> 3 Komentar</button>
+            </div>
+          </div>
+
+          <div class="feed-card">
+            <div class="feed-header">
+              <div class="avatar-sm">S</div>
+              <div>
+                <strong class="feed-author">@seraphic</strong>
+                <span class="feed-time">5 jam yang lalu</span>
+              </div>
+            </div>
+            <p class="feed-content">Tips hemat kopi: seduh sendiri di rumah bisa hemat 300rb/bulan! ☕</p>
+            <div class="feed-actions">
+              <button><i class="ri-heart-line"></i> 24 Like</button>
+              <button><i class="ri-chat-3-line"></i> 8 Komentar</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PAGE: PROFIL & PENGATURAN -->
+      <section id="page-profile" class="page">
+        <div class="section-title">Profil Saya</div>
+        <div class="profile-card">
+          <p><strong>Email:</strong> <span id="profile-email">-</span></p>
+          <button class="btn-danger" id="btn-logout-profile" style="margin-top: 15px; width: 100%;">Keluar Akun</button>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FLOATING ACTION BUTTON (+) WITH POPUP OPTIONS -->
+    <div class="fab-wrapper">
+      <div class="fab-menu" id="fabMenu">
+        <button class="fab-item" onclick="toggleModal('tx')"><i class="ri-edit-box-line"></i> Catat Keuangan</button>
+        <button class="fab-item" onclick="toggleModal('post')"><i class="ri-chat-new-line"></i> Buat Postingan</button>
+      </div>
+      <button class="fab-main" id="fabBtn"><i class="ri-add-line"></i></button>
+    </div>
+
+    <!-- BOTTOM NAVIGATION BAR -->
+    <nav class="bottom-nav">
+      <button class="nav-item active" onclick="switchPage('home', this)">
+        <i class="ri-dashboard-line"></i>
+        <span>Home</span>
+      </button>
+      <button class="nav-item" onclick="switchPage('history', this)">
+        <i class="ri-history-line"></i>
+        <span>Riwayat</span>
+      </button>
+      <div class="nav-placeholder"></div>
+      <button class="nav-item" onclick="switchPage('social', this)">
+        <i class="ri-team-line"></i>
+        <span>Social</span>
+      </button>
+      <button class="nav-item" onclick="switchPage('profile', this)">
+        <i class="ri-user-3-line"></i>
+        <span>Profil</span>
+      </button>
+    </nav>
+
+    <!-- MODAL POPUP FORM CATAT TRANSAKSI -->
+    <div class="modal-overlay" id="txModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Tambah Catatan</h3>
+          <button class="close-btn" onclick="toggleModal('tx', false)">&times;</button>
+        </div>
+        <form id="form-transaction">
+          <div class="type-selector">
+            <label class="type-option expense">
+              <input type="radio" name="txType" value="expense" checked>
+              <span>Pengeluaran (-)</span>
+            </label>
+            <label class="type-option income">
+              <input type="radio" name="txType" value="income">
+              <span>Pemasukan (+)</span>
+            </label>
+          </div>
+          <div class="form-group">
+            <label>Nominal (Rp)</label>
+            <input type="number" id="tx-amount" placeholder="0" required>
+          </div>
+          <div class="form-group">
+            <label>Kategori</label>
+            <select id="tx-category" required>
+              <option value="Makanan & Minuman">Makanan & Minuman</option>
+              <option value="Transportasi">Transportasi</option>
+              <option value="Belanja">Belanja</option>
+              <option value="Hiburan">Hiburan</option>
+              <option value="Gaji / Pemasukan">Gaji / Pemasukan</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Keterangan</label>
+            <input type="text" id="tx-desc" placeholder="Misal: Beli Kopi" required>
+          </div>
+          <button type="submit" class="btn-primary" id="btn-submit-tx">Simpan Transaksi</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FIREBASE SDK COMPAT -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+
+  <!-- Panggil script.js sebagai ES Module -->
+  <script type="module" src="script.js"></script>
+</body>
+  </html>
