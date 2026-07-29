@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MoneyTrack Social - Dompet & Komunitas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="mobile-container">
+    
+    <!-- Halaman Login / Auth -->
+    <div id="authSection" class="auth-screen">
+      <div class="auth-box">
+        <span class="logo-emoji">💸✨</span>
+        <h2>MoneyTrack Social</h2>
+        <p>Catat Keuangan, Berbagi Tips, & Terhubung dengan Teman</p>
+        <button id="googleBtn" class="btn-primary-google">🚀 Masuk dengan Google</button>
+        <p id="authMessage" class="auth-msg"></p>
+      </div>
+    </div>
+
+    <!-- Halaman Utama Aplikasi -->
+    <div id="appSection" class="app-screen hidden">
+      
+      <!-- TOP HEADER / PROFIL -->
+      <header class="app-header">
+        <div class="user-profile-preview" id="profileHeaderBtn" style="cursor: pointer;">
+          <div class="avatar-circle" id="userAvatarBox">
+            <span id="userAvatarText">U</span>
+            <img id="userAvatarImg" class="hidden" src="" alt="Avatar">
+          </div>
+          <div>
+            <span class="greeting">Halo,</span>
+            <h4 id="displayUsername">Pengguna</h4>
+          </div>
+        </div>
+        <div class="header-icons">
+          <button id="logoutBtn" class="icon-btn" title="Keluar">🚪</button>
+        </div>
+      </header>
+
+      <!-- KONTEN UTAMA -->
+      <main class="main-content">
+        
+        <!-- TAB 1: DOMPET / HOME -->
+        <section id="tabHome" class="tab-pane active">
+          <div class="ewallet-card">
+            <div class="card-top">
+              <span>Saldo Utama</span>
+              <span class="badge-secure">🔒 Aman (Gmail Hidden)</span>
+            </div>
+            <h1 id="balance">Rp 0</h1>
+            <div class="wallet-stats">
+              <div><small>Pemasukan</small><b id="income">Rp 0</b></div>
+              <div class="divider-v"></div>
+              <div><small>Pengeluaran</small><b id="expense">Rp 0</b></div>
+            </div>
+          </div>
+
+          <div class="quick-menu-grid">
+            <div class="menu-item" onclick="switchTab('tabTrans')"><span>➕</span><p>Catat</p></div>
+            <div class="menu-item" onclick="switchTab('tabFeed')"><span>🌍</span><p>Feed Sosial</p></div>
+            <div class="menu-item" onclick="switchTab('tabGroup')"><span>👥</span><p>Grup Kas</p></div>
+            <div class="menu-item" onclick="switchTab('tabChat')"><span>💬</span><p>Pesan</p></div>
+          </div>
+
+          <div class="section-title">
+            <h3>Aktivitas Keuangan Terakhir</h3>
+          </div>
+          <ul id="transactionList" class="trans-list"></ul>
+        </section>
+
+        <!-- TAB 2: PENCATATAN KEUANGAN -->
+        <section id="tabTrans" class="tab-pane hidden">
+          <h3>Pencatatan Keuangan</h3>
+          <form id="transactionForm" class="form-card">
+            <input type="text" id="title" placeholder="Keterangan (misal: Beli Kopi)" required>
+            <input type="number" id="amount" placeholder="Nominal (Rp)" required>
+            <div class="form-row">
+              <select id="type">
+                <option value="expense">Pengeluaran (-)</option>
+                <option value="income">Pemasukan (+)</option>
+              </select>
+              <select id="category">
+                <option value="Makanan">Makanan</option>
+                <option value="Transport">Transport</option>
+                <option value="Gaji">Gaji</option>
+                <option value="Hiburan">Hiburan</option>
+              </select>
+            </div>
+            <div class="custom-cat-box">
+              <input type="text" id="newCategoryInput" placeholder="Tambah kategori baru...">
+              <button type="button" id="addCategoryBtn" class="btn-sm">Tambah Kategori</button>
+            </div>
+            <button type="submit" class="btn-primary">Simpan Transaksi</button>
+          </form>
+        </section>
+
+        <!-- TAB 3: FEED SOSIAL & PENCARIAN TEMAN -->
+        <section id="tabFeed" class="tab-pane hidden">
+          <div class="feed-header">
+            <h3>Feed Komunitas</h3>
+          </div>
+
+          <!-- FITUR BARU: CARI TEMAN / USERNAME -->
+          <div class="search-user-box">
+            <input type="text" id="searchUserInput" placeholder="🔍 Cari username teman..." class="search-input">
+            <div id="searchResults" class="search-results-list hidden"></div>
+          </div>
+          
+          <form id="postForm" class="form-card" style="margin-top: 15px;">
+            <textarea id="postContent" placeholder="Bagikan tips hemat atau posting foto pencapaian target tabunganmu..." rows="3" required></textarea>
+            <label style="font-size: 0.8rem; font-weight:600; color:#555;">📷 Tambah Foto dari Galeri (Opsional):</label>
+            <input type="file" id="postImageInput" accept="image/*">
+            <button type="submit" class="btn-primary">📤 Posting ke Feed</button>
+          </form>
+
+          <div id="feedList" class="feed-container" style="margin-top: 15px;">
+            <!-- Postingan & Komentar muncul di sini -->
+          </div>
+        </section>
+
+        <!-- TAB 4: GRUP & SPLIT BILL -->
+        <section id="tabGroup" class="tab-pane hidden">
+          <h3>Grup Kas & Split Bill</h3>
+          <p class="text-muted">Kelola kas bersama kontrakan/komunitas & patungan bayar tagihan.</p>
+          <button class="btn-primary" onclick="alert('Fitur Buat Grup Segera Hadir!')">+ Buat Grup Baru</button>
+        </section>
+
+        <!-- TAB 5: CHAT & PESAN -->
+        <section id="tabChat" class="tab-pane hidden">
+          <h3>Pesan Komunitas / Global Chat</h3>
+          <p class="text-muted" style="font-size:0.8rem;">Kirim pesan publik/interaksi antar pengguna secara real-time.</p>
+          <div class="chat-box-container">
+            <div id="chatMessages" class="chat-messages-list"></div>
+            <form id="chatForm" class="chat-input-row">
+              <input type="text" id="chatInput" placeholder="Tulis pesan ke komunitas..." required>
+              <button type="submit" class="btn-sm">Kirim</button>
+            </form>
+          </div>
+        </section>
+
+        <!-- MODAL EDIT PROFIL -->
+        <div id="profileModal" class="modal-overlay hidden">
+          <div class="modal-content form-card">
+            <h3>Edit Profil</h3>
+            <label style="font-size: 0.8rem; font-weight: 600;">Username Baru:</label>
+            <input type="text" id="editUsernameInput" placeholder="Username kamu">
+            
+            <label style="font-size: 0.8rem; font-weight: 600;">Foto Profil (Dari Galeri):</label>
+            <input type="file" id="editAvatarInput" accept="image/*">
+            
+            <div class="form-row" style="margin-top: 10px;">
+              <button type="button" id="saveProfileBtn" class="btn-primary">Simpan Profil</button>
+              <button type="button" id="closeProfileBtn" class="btn-sm" style="background:#eee; color:#333;">Batal</button>
+            </div>
+          </div>
+        </div>
+
+      </main>
+
+      <!-- BOTTOM NAVIGATION BAR -->
+      <nav class="bottom-nav">
+        <button class="nav-item active" onclick="switchTab('tabHome')"><span>🏠</span><small>Home</small></button>
+        <button class="nav-item" onclick="switchTab('tabTrans')"><span>📝</span><small>Catat</small></button>
+        <button class="nav-item" onclick="switchTab('tabFeed')"><span>🌍</span><small>Feed</small></button>
+        <button class="nav-item" onclick="switchTab('tabGroup')"><span>👥</span><small>Grup</small></button>
+        <button class="nav-item" onclick="switchTab('tabChat')"><span>💬</span><small>Chat</small></button>
+      </nav>
+
+    </div>
+  </div>
+
+  <script type="module" src="script.js"></script>
+</body>
+  </html>
