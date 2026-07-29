@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>MoneyS ☕</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Firebase SDK untuk Login Gmail Resmi -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+</head>
+<body>
+
+  <!-- TOAST NOTIFIKASI -->
+  <div id="customToast" class="custom-toast">
+    <span id="toastMsg">Pemberitahuan</span>
+  </div>
+
+  <div class="mobile-container">
+    
+    <!-- AUTH SCREEN (LOGIN) -->
+    <div id="authSection" class="auth-screen">
+      <div class="auth-box">
+        
+        <!-- SAPAAN WAKTU REALTIME -->
+        <div class="realtime-welcome-box">
+          <p id="authGreetingText" class="greeting-highlight">Selamat Datang</p>
+          <p id="authClockText" class="clock-highlight">00:00:00 WIB</p>
+          <p id="authDateText" class="date-highlight">Loading tanggal...</p>
+        </div>
+
+        <div class="app-logo-icon">🪙</div>
+        <h1 class="app-logo-title">MoneyS ☕</h1>
+        <p class="app-subtitle">Hi! Here MoneyS</p>
+        
+        <!-- INPUT & TOMBOL LOGIN -->
+        <div class="auth-actions-group">
+          <input type="text" id="loginIdentifierInput" class="input-custom-field" placeholder="Email atau Nomor HP...">
+
+          <button id="btnGmailAuth" class="btn-primary glow-btn">📧 LOG IN WITH GMAIL</button>
+          <button id="btnEmailOTPAuth" class="btn-secondary glow-btn">✉️ LOGIN VIA GOOGLE OTP EMAIL</button>
+          <button id="btnPhoneOTPAuth" class="btn-secondary glow-btn">📱 LOGIN VIA NOMOR TELEPON</button>
+        </div>
+        
+        <p class="terms-text">By continuing you agree to our <b>Terms & Privacy Policy</b></p>
+      </div>
+    </div>
+
+    <!-- MAIN APP SCREEN -->
+    <div id="appSection" class="app-screen hidden">
+      
+      <!-- TOP HEADER -->
+      <header class="app-header">
+        <div class="user-profile-preview" id="profileHeaderBtn">
+          <div class="avatar-circle" id="userAvatarBox">
+            <span id="userAvatarText">U</span>
+            <img id="userAvatarImg" class="hidden" src="" alt="Avatar">
+          </div>
+          <div class="user-info-text">
+            <span id="headerGreetingTag" class="header-greeting">Selamat Datang,</span>
+            <h4 id="displayUsername" class="header-username">User</h4>
+          </div>
+        </div>
+        <button id="logoutBtn" class="icon-btn" title="Keluar">🚪</button>
+      </header>
+
+      <!-- MAIN CONTENT (FULL HEIGHT) -->
+      <main class="main-content">
+        
+        <!-- TAB 1: HOME -->
+        <section id="tabHome" class="tab-pane">
+          <div class="time-widget-card">
+            <div class="time-widget-header">
+              <span>System Realtime</span>
+              <span class="live-badge">LIVE</span>
+            </div>
+            <h2 id="homeLiveClock" class="live-clock-display">00:00:00 WIB</h2>
+            <div id="homeLiveDate" class="live-date-display">-</div>
+          </div>
+
+          <div class="ewallet-card">
+            <div class="wallet-card-header">
+              <span>Saldo Utama</span>
+              <span class="badge-safe">Aman</span>
+            </div>
+            <h1 id="balance">Rp 0</h1>
+            <div class="wallet-stats">
+              <div><small>Pemasukan</small><b id="income">Rp 0</b></div>
+              <div class="stat-divider"></div>
+              <div><small>Pengeluaran</small><b id="expense">Rp 0</b></div>
+            </div>
+          </div>
+
+          <div class="quick-menu-grid">
+            <div class="menu-item" onclick="switchTab('tabTrans')">
+              <div class="icon-box">📝</div>
+              <p>Catat</p>
+            </div>
+            <div class="menu-item" onclick="switchTab('tabFeed')">
+              <div class="icon-box">☕</div>
+              <p>Feed</p>
+            </div>
+            <div class="menu-item" onclick="switchTab('tabGroup')">
+              <div class="icon-box">👥</div>
+              <p>Grup</p>
+            </div>
+            <div class="menu-item" onclick="switchTab('tabChat')">
+              <div class="icon-box">💬</div>
+              <p>Messej</p>
+            </div>
+          </div>
+
+          <div class="transaction-section">
+            <h3 class="section-title">Transaksi Terbaru</h3>
+            <div id="transactionEmptyState" class="empty-state-box">
+              <p>Belum ada transaksi</p>
+            </div>
+            <ul id="transactionList" class="transaction-list"></ul>
+          </div>
+        </section>
+
+        <!-- TAB 2: CATAT KEUANGAN -->
+        <section id="tabTrans" class="tab-pane hidden">
+          <h3 class="section-title">Catat Keuangan</h3>
+          <form id="transactionForm" class="full-card-form">
+            <input type="text" id="title" class="input-custom-field" placeholder="Keterangan..." required>
+            <input type="number" id="amount" class="input-custom-field" placeholder="Nominal (Rp)" required>
+            <div class="form-row-flex">
+              <select id="type" class="input-custom-field">
+                <option value="expense">Pengeluaran (-)</option>
+                <option value="income">Pemasukan (+)</option>
+              </select>
+              <select id="category" class="input-custom-field">
+                <option value="Makanan">Makanan</option>
+                <option value="Transport">Transport</option>
+                <option value="Gaji">Gaji</option>
+                <option value="Lainnya">Lainnya</option>
+              </select>
+            </div>
+            <button type="submit" class="btn-primary glow-btn">Simpan Transaksi</button>
+          </form>
+        </section>
+
+        <!-- TAB 3: FEED KOMUNITAS (FULL HEIGHT) -->
+        <section id="tabFeed" class="tab-pane hidden">
+          <h3 class="section-title">Feed Komunitas</h3>
+          <form id="postForm" class="full-card-form">
+            <textarea id="postContent" placeholder="Apa yang Anda pikirkan? Gunakan @ untuk tag teman..." rows="3"></textarea>
+            
+            <label class="custom-file-btn">
+              <span>🖼️</span>
+              <span id="fileUploadLabelText">Tambahkan Foto / Gambar</span>
+              <input type="file" id="postImageInput" accept="image/*" class="hidden">
+            </label>
+            <div id="previewContainer" class="image-preview-box hidden">
+              <img id="imagePreview" src="" alt="Preview">
+              <button type="button" id="removeImgBtn" class="close-btn-circle">✕</button>
+            </div>
+
+            <button type="submit" class="btn-primary glow-btn">Post ke Feed</button>
+          </form>
+
+          <div id="feedList" class="feed-list-container"></div>
+        </section>
+
+        <!-- TAB 4: GRUP (FULL HEIGHT) -->
+        <section id="tabGroup" class="tab-pane hidden">
+          <div class="tab-header-flex">
+            <h3 class="section-title">Grup Saya</h3>
+            <button class="btn-sm glow-btn" onclick="openModal('createGroupModal')">+ Buat Grup</button>
+          </div>
+          <div id="groupList" class="group-list-container"></div>
+        </section>
+
+        <!-- TAB 5: CHAT / MESSEJ (FULL HEIGHT FULL CONTAINER) -->
+        <section id="tabChat" class="tab-pane hidden full-height-pane">
+          <div class="chat-tabs-header">
+            <div class="chat-tab active" id="tabChatGlobal" onclick="switchChatMode('global')">Global</div>
+            <div class="chat-tab" id="tabChatPersonal" onclick="switchChatMode('private')">Personal</div>
+            <div class="chat-tab" id="tabChatGroup" onclick="switchChatMode('group')">Grup</div>
+          </div>
+
+          <div id="privateFriendSelector" class="chat-selector-bar hidden">
+            <select id="selectPrivateFriend" class="select-custom">
+              <option value="">-- Pilih Teman Chat --</option>
+            </select>
+            <button id="btnAddFriendBtn" class="btn-sm glow-btn">+ Tambah</button>
+          </div>
+
+          <div id="groupChatSelector" class="chat-selector-bar hidden">
+            <select id="selectGroupChat" class="select-custom">
+              <option value="">-- Pilih Grup --</option>
+            </select>
+            <button id="btnGroupSettings" class="icon-btn glow-btn">⚙️</button>
+          </div>
+
+          <!-- AREA CHAT DIBUAT FULL SAMPAI BAWAH -->
+          <div id="chatMessages" class="chat-messages-full"></div>
+
+          <div class="chat-input-bar">
+            <div class="quick-emoji-row">
+              <button type="button" onclick="addEmojiToInput('😀')">😀</button>
+              <button type="button" onclick="addEmojiToInput('☕')">☕</button>
+              <button type="button" onclick="addEmojiToInput('💸')">💸</button>
+            </div>
+            <form id="chatForm" class="chat-input-flex">
+              <input type="text" id="chatInput" placeholder="Ketik pesan..." required>
+              <button type="submit" class="btn-sm glow-btn">Kirim</button>
+            </form>
+          </div>
+        </section>
+
+      </main>
+
+      <!-- MODAL VERIFIKASI OTP -->
+      <div id="otpModal" class="modal-overlay hidden">
+        <div class="modal-content text-center">
+          <button class="close-window-x" onclick="closeModal('otpModal')">✕</button>
+          <h3 class="modal-title">Masukkan Kode OTP</h3>
+          <p class="modal-desc">Kode OTP 6-digit dikirim ke <b id="otpTargetText">-</b></p>
+          <input type="text" id="otpCodeInput" class="input-custom-field text-center" placeholder="1 2 3 4 5 6" maxlength="6">
+          <button id="btnVerifyOTP" class="btn-primary glow-btn">Verifikasi & Masuk</button>
+        </div>
+      </div>
+
+      <!-- MODAL CARI TEMAN -->
+      <div id="addFriendModal" class="modal-overlay hidden">
+        <div class="modal-content">
+          <button class="close-window-x" onclick="closeModal('addFriendModal')">✕</button>
+          <h3 class="modal-title">Tambah Teman</h3>
+          <input type="text" id="searchFriendInput" class="input-custom-field" placeholder="Username teman...">
+          <button id="btnConfirmAddFriend" class="btn-primary glow-btn">Tambah ke Kontak</button>
+        </div>
+      </div>
+
+      <!-- MODAL EDIT PROFIL -->
+      <div id="profileModal" class="modal-overlay hidden">
+        <div class="modal-content">
+          <button class="close-window-x" onclick="closeModal('profileModal')">✕</button>
+          <h3 class="modal-title">Edit Profil Saya</h3>
+          
+          <label class="input-label">Username:</label>
+          <input type="text" id="editUsernameInput" class="input-custom-field">
+          
+          <label class="input-label">Bio Profil:</label>
+          <input type="text" id="editBioInput" class="input-custom-field">
+          
+          <label class="custom-file-btn margin-top-10">
+            <span>📷</span>
+            <span id="avatarFileLabelText">Ganti Foto Profil</span>
+            <input type="file" id="editAvatarInput" accept="image/*" class="hidden">
+          </label>
+
+          <button id="saveProfileBtn" class="btn-primary glow-btn margin-top-10">Simpan Profil</button>
+        </div>
+      </div>
+
+      <!-- BOTTOM NAVIGATION BAR (FIXED 100%) -->
+      <nav class="bottom-nav">
+        <button class="nav-item active" onclick="switchTab('tabHome')">
+          <span class="nav-icon">🏠</span>
+          <small>Home</small>
+        </button>
+        <button class="nav-item" onclick="switchTab('tabTrans')">
+          <span class="nav-icon">📝</span>
+          <small>Catat</small>
+        </button>
+        <button class="nav-item" onclick="switchTab('tabFeed')">
+          <span class="nav-icon">☕</span>
+          <small>Feed</small>
+        </button>
+        <button class="nav-item" onclick="switchTab('tabGroup')">
+          <span class="nav-icon">👥</span>
+          <small>Grup</small>
+        </button>
+        <button class="nav-item" onclick="switchTab('tabChat')">
+          <span class="nav-icon">💬</span>
+          <small>Chat</small>
+        </button>
+      </nav>
+
+    </div>
+  </div>
+
+  <script type="module" src="script.js"></script>
+</body>
+                  </html>
+              
