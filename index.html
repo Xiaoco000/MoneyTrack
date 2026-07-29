@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MONEYTRACK ☕</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- TOAST NOTIFIKASI -->
+  <div id="customToast" class="custom-toast">
+    <span id="toastIcon">✨</span>
+    <span id="toastMsg">Pemberitahuan</span>
+  </div>
+
+  <div class="mobile-container">
+    
+    <!-- AUTH SCREEN -->
+    <div id="authSection" class="auth-screen">
+      <div class="auth-box">
+        <div style="font-size: 4rem; margin-bottom: 10px;">🪙</div>
+        <h1 class="app-logo-title">MONEYTRACK ☕</h1>
+        <p class="app-subtitle">Hi ! here MoneyTrack 🪙</p>
+        
+        <div style="width: 100%; display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+          <button id="googleBtn" class="btn-primary">✉️ LOG IN ON MONEYTRACK</button>
+          <button id="facebookAuthMockBtn" class="btn-secondary-fb" onclick="document.getElementById('googleBtn').click()">📘 LOG IN WITH FACEBOOK</button>
+        </div>
+        
+        <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 25px;">By continuing you agree to our <b>Terms & Privacy Policy</b></p>
+      </div>
+    </div>
+
+    <!-- MAIN APP SCREEN -->
+    <div id="appSection" class="app-screen hidden">
+      
+      <!-- TOP HEADER -->
+      <header class="app-header">
+        <div class="user-profile-preview" id="profileHeaderBtn" style="cursor: pointer;">
+          <div class="avatar-circle" id="userAvatarBox">
+            <span id="userAvatarText">U</span>
+            <img id="userAvatarImg" class="hidden" src="" alt="Avatar">
+          </div>
+          <div>
+            <span style="font-size: 0.65rem; color: var(--text-muted);">Selamat Datang,</span>
+            <h4 id="displayUsername" style="font-size:0.9rem; font-weight:700;">Pengguna</h4>
+          </div>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button id="logoutBtn" class="icon-btn" title="Keluar">🚪</button>
+        </div>
+      </header>
+
+      <!-- MAIN CONTENT -->
+      <main class="main-content">
+        
+        <!-- TAB 1: HOME / EWALLET -->
+        <section id="tabHome" class="tab-pane">
+          <div class="ewallet-card">
+            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; opacity: 0.9;">
+              <span>Saldo Utama</span>
+              <span style="background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 12px; font-size:0.65rem; border: 1px solid var(--border-light);">🔒 Aman</span>
+            </div>
+            <h1 id="balance">Rp 0</h1>
+            <div class="wallet-stats">
+              <div><small style="display:block; opacity:0.8;">Pemasukan</small><b id="income">Rp 0</b></div>
+              <div style="width:1px; background:var(--border-color);"></div>
+              <div><small style="display:block; opacity:0.8;">Pengeluaran</small><b id="expense">Rp 0</b></div>
+            </div>
+          </div>
+
+          <!-- GRID MENU DENGAN TAMPILAN METALIK & NAMA BARU -->
+          <div class="quick-menu-grid">
+            <div class="menu-item" onclick="switchTab('tabTrans')"><span>📝</span><p>Catat</p></div>
+            <div class="menu-item" onclick="switchTab('tabFeed')"><span>☕</span><p>Feed</p></div>
+            <div class="menu-item" onclick="switchTab('tabGroup')"><span>👥</span><p>Grup</p></div>
+            <div class="menu-item" onclick="switchTab('tabChat')"><span>💬</span><p>Messej</p></div>
+          </div>
+
+          <h3 style="font-size: 0.9rem; margin-bottom: 8px; font-weight:700;">Transaksi Terbaru</h3>
+          <ul id="transactionList" style="list-style:none; display:flex; flex-direction:column; gap:8px;"></ul>
+        </section>
+
+        <!-- TAB 2: CATAT KEUANGAN -->
+        <section id="tabTrans" class="tab-pane hidden">
+          <h3 style="font-size:0.95rem; margin-bottom:12px; font-weight:700;">Catat Keuangan</h3>
+          <form id="transactionForm" style="display:flex; flex-direction:column; gap:10px; background:var(--metal-box); padding:18px; border-radius:24px; border:1px solid var(--border-light);">
+            <input type="text" id="title" class="input-custom-field" placeholder="Keterangan..." required style="margin-bottom:0;">
+            <input type="number" id="amount" class="input-custom-field" placeholder="Nominal (Rp)" required style="margin-bottom:0;">
+            <div style="display:flex; gap:8px;">
+              <select id="type" class="input-custom-field" style="margin-bottom:0;"><option value="expense">Pengeluaran (-)</option><option value="income">Pemasukan (+)</option></select>
+              <select id="category" class="input-custom-field" style="margin-bottom:0;"><option value="Makanan">Makanan</option><option value="Transport">Transport</option><option value="Gaji">Gaji</option></select>
+            </div>
+            <button type="submit" class="btn-primary" style="margin-top:6px;">Simpan Transaksi</button>
+          </form>
+        </section>
+
+        <!-- TAB 3: FEED KOMUNITAS -->
+        <section id="tabFeed" class="tab-pane hidden">
+          <h3 style="font-size:0.95rem; margin-bottom:12px; font-weight:700;">Feed Komunitas</h3>
+          
+          <form id="postForm" style="background:var(--metal-box); padding:16px; border-radius:24px; border:1px solid var(--border-light); margin-bottom:14px; display:flex; flex-direction:column; gap:10px;">
+            <textarea id="postContent" placeholder="Apa yang Anda pikirkan? Gunakan @ untuk tag teman..." rows="3" style="width:100%; border:none; outline:none; font-size:0.85rem; resize:none; font-family:inherit; background:transparent; color:var(--text-main);"></textarea>
+            
+            <label class="custom-file-btn">
+              <span>🖼️</span>
+              <span id="fileUploadLabelText">Tambahkan Foto / Gambar</span>
+              <input type="file" id="postImageInput" accept="image/*" class="hidden">
+            </label>
+            <div id="previewContainer" class="hidden" style="position:relative; width:100%; max-height:150px; overflow:hidden; border-radius:16px;">
+              <img id="imagePreview" src="" style="width:100%; height:100%; object-fit:cover;">
+              <button type="button" id="removeImgBtn" style="position:absolute; top:6px; right:6px; background:rgba(0,0,0,0.6); color:white; border:none; border-radius:50%; width:24px; height:24px; cursor:pointer;">✕</button>
+            </div>
+
+            <button type="submit" class="btn-primary">📤 Post ke Feed</button>
+          </form>
+
+          <div id="feedList"></div>
+        </section>
+
+        <!-- TAB 4: GRUP -->
+        <section id="tabGroup" class="tab-pane hidden">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h3 style="font-weight:700;">Grup Saya</h3>
+            <button class="btn-sm" onclick="document.getElementById('createGroupModal').classList.remove('hidden')">+ Buat Grup</button>
+          </div>
+          <div id="groupList" style="display:flex; flex-direction:column; gap:10px;"></div>
+        </section>
+
+        <!-- TAB 5: CHAT (GLOBAL & LAINNYA) -->
+        <section id="tabChat" class="tab-pane hidden">
+          <div class="messenger-container">
+            <div class="chat-tabs-header">
+              <div class="chat-tab active" id="tabChatGlobal" onclick="switchChatMode('global')">🌐 Global</div>
+              <div class="chat-tab" id="tabChatPersonal" onclick="switchChatMode('private')">💬 Personal</div>
+              <div class="chat-tab" id="tabChatGroup" onclick="switchChatMode('group')">👥 Grup</div>
+            </div>
+
+            <div id="privateFriendSelector" class="chat-selector-bar hidden">
+              <select id="selectPrivateFriend" class="select-custom"><option value="">-- Pilih Teman Chat --</option></select>
+            </div>
+            <div id="groupChatSelector" class="chat-selector-bar hidden">
+              <select id="selectGroupChat" class="select-custom" style="flex:1;"><option value="">-- Pilih Grup Chat --</option></select>
+              <button id="btnGroupSettings" class="icon-btn" style="margin-left:6px;" title="Group Settings">⚙️</button>
+            </div>
+
+            <div id="chatMessages" class="chat-messages-area"></div>
+
+            <div class="chat-input-bar">
+              <div style="display:flex; gap:6px;">
+                <button type="button" style="border:1px solid var(--border-color); background:#141518; color:var(--text-main); border-radius:12px; padding:2px 8px;" onclick="addEmojiToInput('😀')">😀</button>
+                <button type="button" style="border:1px solid var(--border-color); background:#141518; color:var(--text-main); border-radius:12px; padding:2px 8px;" onclick="addEmojiToInput('☕')">☕</button>
+                <button type="button" style="border:1px solid var(--border-color); background:#141518; color:var(--text-main); border-radius:12px; padding:2px 8px;" onclick="addEmojiToInput('💸')">💸</button>
+              </div>
+              <form id="chatForm" class="chat-input-flex">
+                <input type="text" id="chatInput" placeholder="Ketik pesan..." required>
+                <button type="submit" class="btn-sm">Kirim</button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+      <!-- MODALS -->
+      <div id="deleteChatModal" class="modal-overlay hidden">
+        <div class="modal-content" style="text-align:center;">
+          <button class="close-window-x" onclick="closeModal('deleteChatModal')">✕</button>
+          <h3 style="font-size:1rem; margin-bottom:8px; font-weight:700;">Hapus Pesan Ini?</h3>
+          <p style="font-size:0.78rem; color:var(--text-muted); margin-bottom:16px;">Pilih opsi penghapusan pesan.</p>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <button id="btnDeleteForEveryone" class="btn-primary" style="background:#d9534f; border-color:#d9534f; color:white;">🗑️ Hapus untuk Semua Orang</button>
+            <button id="btnDeleteForMe" class="btn-primary" style="background:#3a3d42; border-color:var(--border-light); color:white;">🙈 Hapus untuk Saya Saja</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="createGroupModal" class="modal-overlay hidden">
+        <div class="modal-content" style="display:flex; flex-direction:column; gap:10px;">
+          <button class="close-window-x" onclick="closeModal('createGroupModal')">✕</button>
+          <h3 style="font-weight:700;">Buat Grup Baru</h3>
+          <input type="text" id="newGroupNameInput" class="input-custom-field" placeholder="Nama Grup..." style="margin-bottom:0;">
+          <input type="text" id="newGroupDescInput" class="input-custom-field" placeholder="Deskripsi grup..." style="margin-bottom:0;">
+          <button class="btn-primary" id="saveGroupBtn" style="margin-top:4px;">Buat Grup</button>
+        </div>
+      </div>
+
+      <div id="groupSettingsModal" class="modal-overlay hidden">
+        <div class="modal-content" style="display:flex; flex-direction:column; gap:10px;">
+          <button class="close-window-x" onclick="closeModal('groupSettingsModal')">✕</button>
+          <h3 style="font-weight:700;">⚙️ Pengaturan Grup</h3>
+          <label style="font-size:0.75rem; font-weight:bold;">Nama Grup:</label>
+          <input type="text" id="editGroupNameInput" class="input-custom-field" style="margin-bottom:0;">
+          <button id="saveGroupSettingsBtn" class="btn-sm">Simpan Perubahan</button>
+          <hr style="border:none; border-top:1px solid var(--border-color); margin:4px 0;">
+          <button id="btnDeleteGroup" class="btn-sm" style="background:#d9534f; color:white;">🔥 Hapus / Bubarkan Grup</button>
+        </div>
+      </div>
+
+      <div id="profileModal" class="modal-overlay hidden">
+        <div class="modal-content" style="display:flex; flex-direction:column; gap:10px;">
+          <button class="close-window-x" onclick="closeModal('profileModal')">✕</button>
+          <h3 style="font-weight:700;">Edit Profil Saya</h3>
+          <label style="font-size:0.75rem; font-weight:bold;">Username Baru:</label>
+          <input type="text" id="editUsernameInput" class="input-custom-field" style="margin-bottom:0;">
+          <label style="font-size:0.75rem; font-weight:bold;">Bio Profil:</label>
+          <input type="text" id="editBioInput" class="input-custom-field" style="margin-bottom:0;">
+          
+          <label class="custom-file-btn">
+            <span>📷</span>
+            <span id="avatarFileLabelText">Pilih Foto Profil Baru</span>
+            <input type="file" id="editAvatarInput" accept="image/*" class="hidden">
+          </label>
+
+          <button id="saveProfileBtn" class="btn-primary" style="margin-top:6px;">Simpan Profil</button>
+        </div>
+      </div>
+
+      <!-- BOTTOM NAVIGATION BAR -->
+      <nav class="bottom-nav">
+        <button class="nav-item active" onclick="switchTab('tabHome')"><span>🏠</span><small>Home</small></button>
+        <button class="nav-item" onclick="switchTab('tabTrans')"><span>📝</span><small>Catat</small></button>
+        <button class="nav-item" onclick="switchTab('tabFeed')"><span>☕</span><small>Feed</small></button>
+        <button class="nav-item" onclick="switchTab('tabGroup')"><span>👥</span><small>Grup</small></button>
+        <button class="nav-item" onclick="switchTab('tabChat')"><span>💬</span><small>Chat</small></button>
+      </nav>
+
+    </div>
+  </div>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
