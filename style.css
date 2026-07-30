@@ -1,0 +1,61 @@
+/* ==========================================
+   STEEL METALLIC LIGHT THEME
+   Placeholder minimal — ganti dengan versi asli
+   kamu kalau ada.
+   ========================================== */
+
+.steel-card {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.steel-header {
+  background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+}
+
+.steel-logo-box {
+  background: linear-gradient(135deg, #ffffff, #e2e8f0);
+}
+
+.steel-input {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #cbd5e1;
+  color: #1e293b;
+}
+
+.steel-input:focus {
+  border-color: #64748b;
+  box-shadow: 0 0 0 2px rgba(100, 116, 139, 0.2);
+}
+
+.steel-button {
+  background: linear-gradient(135deg, #f8fafc, #cbd5e1);
+  border: 1px solid #94a3b8;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.steel-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(71, 85, 105, 0.25);
+}
+
+.steel-alt-btn {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+}
+
+.steel-alt-btn:hover {
+  background: #e2e8f0;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hidden {
+  display: none !important;
+}
