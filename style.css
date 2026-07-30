@@ -1,0 +1,77 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background: radial-gradient(circle at center, #18181b 0%, #09090b 100%);
+}
+
+/* Efek Kaca Metalik Steel Futuristik */
+.steel-card {
+    background: linear-gradient(135deg, rgba(39, 39, 42, 0.8) 0%, rgba(24, 24, 27, 0.95) 100%);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(113, 113, 122, 0.3);
+    box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Header Steel Metalik */
+.steel-header {
+    background: linear-gradient(135deg, #27272a 0%, #18181b 60%, #09090b 100%);
+    border-bottom: 1px solid rgba(161, 161, 170, 0.25);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Tombol Utama Silver/Steel Metalik */
+.steel-button {
+    background: linear-gradient(135deg, #f4f4f5 0%, #a1a1aa 100%);
+    box-shadow: 0 0 15px rgba(244, 244, 245, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    transition: all 0.3s ease;
+}
+
+.steel-button:hover {
+    box-shadow: 0 0 25px rgba(244, 244, 245, 0.45), inset 0 1px 0 rgba(255, 255, 255, 1);
+    filter: brightness(1.05);
+}
+
+/* Tombol Alternatif (Google, OTP) */
+.steel-alt-btn {
+    background: rgba(39, 39, 42, 0.6);
+    border: 1px solid rgba(113, 113, 122, 0.4);
+    color: #d4d4d8;
+}
+
+.steel-alt-btn:hover {
+    background: rgba(63, 63, 70, 0.8);
+    border-color: rgba(161, 161, 170, 0.8);
+    color: #ffffff;
+}
+
+/* Input Field Baja */
+.steel-input {
+    background: rgba(9, 9, 11, 0.9);
+    border: 1px solid rgba(82, 82, 91, 0.6);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.9);
+    color: #f4f4f5;
+    transition: all 0.3s ease;
+}
+
+.steel-input:focus {
+    border-color: #a1a1aa;
+    box-shadow: 0 0 10px rgba(161, 161, 170, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.9);
+    outline: none;
+}
+
+/* Logo Box Styling */
+.steel-logo-box {
+    background: linear-gradient(135deg, #3f3f46 0%, #18181b 100%);
+    border: 1px solid rgba(212, 212, 216, 0.3);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 8px 20px rgba(0,0,0,0.5);
+}
+
+/* Sembunyikan Scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
