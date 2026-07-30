@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoneyS - Finance & Sosial</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom Steel Metallic CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-zinc-950 text-zinc-100 antialiased flex justify-center items-center min-h-screen selection:bg-zinc-400 selection:text-zinc-950">
+
+    <!-- Mobile Frame Container -->
+    <div class="w-full max-w-md h-screen md:h-[844px] md:rounded-3xl bg-zinc-900 shadow-2xl flex flex-col relative overflow-hidden border border-zinc-700/40">
+
+        <!-- MODERN CUSTOM TOAST NOTIFICATION -->
+        <div id="toastNotification" class="absolute top-5 left-5 right-5 z-50 transform -translate-y-28 opacity-0 transition-all duration-300 pointer-events-none">
+            <div class="steel-card p-4 rounded-2xl flex items-center space-x-3 shadow-2xl border border-zinc-600/60 bg-zinc-900/95 backdrop-blur-xl">
+                <div id="toastIcon" class="w-8 h-8 rounded-xl bg-zinc-700/50 flex items-center justify-center text-zinc-200 text-sm">
+                    <i class="fa-solid fa-info"></i>
+                </div>
+                <div class="flex-1">
+                    <h5 id="toastTitle" class="text-xs font-bold text-zinc-100">Notifikasi</h5>
+                    <p id="toastMessage" class="text-[11px] text-zinc-400">Pesan sistem...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- LOADING SCREEN -->
+        <div id="loadingScreen" class="absolute inset-0 bg-zinc-950 z-50 flex flex-col items-center justify-center space-y-4">
+            <div class="w-12 h-12 border-4 border-zinc-400 border-t-transparent rounded-full animate-spin shadow-[0_0_15px_rgba(161,161,170,0.3)]"></div>
+            <p class="text-xs text-zinc-400 font-mono tracking-widest">LOADING STEEL SYSTEM...</p>
+        </div>
+
+        <!-- ================= AUTH SECTION ================= -->
+        <div id="authView" class="absolute inset-0 bg-zinc-900 z-40 flex flex-col justify-center px-6 overflow-y-auto hidden">
+            <div class="text-center mb-6">
+                <!-- Logo Kustom S -->
+                <div class="w-16 h-16 steel-logo-box rounded-3xl mx-auto flex items-center justify-center text-zinc-100 text-2xl font-bold shadow-xl mb-3 overflow-hidden border border-zinc-500/40 bg-zinc-950">
+                    <img src="https://i.ibb.co.raw/..." alt="Logo" id="logoImg" class="w-10 h-10 object-contain filter invert opacity-90" onerror="this.src=''; this.parentElement.innerHTML='<span class=\'text-zinc-200 font-bold text-xl\'>S</span>'">
+                </div>
+                <h1 class="text-2xl font-bold tracking-tight text-zinc-100">MoneyS</h1>
+                <p class="text-[11px] text-zinc-400 mt-1 font-mono tracking-wider">FINANCE & SOSIAL</p>
+            </div>
+
+            <!-- Form Login -->
+            <div id="loginFormContainer" class="space-y-3">
+                <div class="space-y-1">
+                    <label class="text-[11px] text-zinc-400 font-mono">EMAIL / NO. TELEPON</label>
+                    <input type="text" id="loginEmail" placeholder="nama@email.com atau 0812..." class="w-full steel-input rounded-xl px-4 py-3 text-xs focus:outline-none">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[11px] text-zinc-400 font-mono">PASSWORD</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••" class="w-full steel-input rounded-xl px-4 py-3 text-xs focus:outline-none">
+                </div>
+                
+                <button onclick="handleLogin()" class="w-full steel-button text-zinc-950 font-bold py-3 rounded-xl text-xs tracking-wider uppercase mt-1">
+                    Masuk
+                </button>
+
+                <div class="relative flex py-2 items-center">
+                    <div class="flex-grow border-t border-zinc-800"></div>
+                    <span class="flex-shrink mx-4 text-[10px] text-zinc-500 font-mono">ATAU MASUK DENGAN</span>
+                    <div class="flex-grow border-t border-zinc-800"></div>
+                </div>
+
+                <!-- Opsi Login Alternatif -->
+                <div class="grid grid-cols-3 gap-2">
+                    <button onclick="handleGoogleLogin()" class="steel-alt-btn py-2.5 rounded-xl text-[11px] font-medium flex items-center justify-center space-x-1.5 transition">
+                        <i class="fa-brands fa-google text-xs"></i><span>Google</span>
+                    </button>
+                    <button onclick="handleEmailOtpLogin()" class="steel-alt-btn py-2.5 rounded-xl text-[11px] font-medium flex items-center justify-center space-x-1.5 transition">
+                        <i class="fa-solid fa-envelope text-xs"></i><span>OTP Email</span>
+                    </button>
+                    <button onclick="handlePhoneOtpLogin()" class="steel-alt-btn py-2.5 rounded-xl text-[11px] font-medium flex items-center justify-center space-x-1.5 transition">
+                        <i class="fa-solid fa-phone text-xs"></i><span>OTP Telp</span>
+                    </button>
+                </div>
+
+                <div class="text-center mt-4">
+                    <span class="text-xs text-zinc-400">Belum pernah akses web app? </span>
+                    <button onclick="toggleAuthMode('register')" class="text-xs text-zinc-200 font-semibold hover:underline">Daftar Dulu</button>
+                </div>
+            </div>
+
+            <!-- Form Register -->
+            <div id="registerFormContainer" class="space-y-3 hidden">
+                <div class="space-y-1">
+                    <label class="text-[11px] text-zinc-400 font-mono">NAMA LENGKAP</label>
+                    <input type="text" id="regName" placeholder="Nama Lengkap" class="w-full steel-input rounded-xl px-3.5 py-2.5 text-xs focus:outline-none">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[11px] text-zinc-400 font-mono">USERNAME</label>
+                    <input type="text" id="regUsername" placeholder="username" class="w-full steel-input rounded-xl px-3.5 py-2.5 text-xs focus:outline-none">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[11px] text-zinc-400 font-mono">EMAIL / NO. TELEPON</label>
+                    <input type="text" id="regEmail" placeholder="email@domain.com / 08xx" class="w-full steel-input rounded-xl px-3.5 py-2.5 text-xs focus:outline-none">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[11px] text-zinc-400 font-mono">PASSWORD</label>
+                    <input type="password" id="regPassword" placeholder="••••••••" class="w-full steel-input rounded-xl px-3.5 py-2.5 text-xs focus:outline-none">
+                </div>
+                <button onclick="handleRegister()" class="w-full steel-button text-zinc-950 font-bold py-3 rounded-xl text-xs tracking-wider uppercase mt-1">
+                    Daftar Akun
+                </button>
+                <div class="text-center mt-3">
+                    <span class="text-xs text-zinc-400">Sudah punya akun? </span>
+                    <button onclick="toggleAuthMode('login')" class="text-xs text-zinc-200 font-semibold hover:underline">Masuk</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= MAIN APP VIEW ================= -->
+        <div id="appView" class="flex flex-col h-full hidden">
+            <!-- HEADER SECTION -->
+            <header class="px-6 pt-6 pb-4 steel-header text-white rounded-b-3xl relative shrink-0">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <div id="greetingContainer" class="flex items-center space-x-2 text-zinc-300 text-xs font-mono">
+                            <span id="greetingIcon">🛡️</span>
+                            <span id="greetingText">SECURE SESSION</span>
+                        </div>
+                        <h1 id="userDisplayName" class="text-xl font-bold mt-1 tracking-tight text-zinc-100">Halo, User 👋</h1>
+                        <p id="userDisplayUsername" class="text-[11px] text-zinc-400 font-mono">@username • Finance & Sosial</p>
+                        
+                        <div class="flex items-center space-x-3 mt-2 text-[11px] text-zinc-300 font-mono">
+                            <span id="currentDate"><i class="fa-regular fa-calendar-days mr-1"></i> Rabu, 29 Jul 2026</span>
+                            <span>•</span>
+                            <span id="clock" class="text-zinc-200"><i class="fa-regular fa-clock mr-1"></i> 20:47:25</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center space-x-2">
+                        <button onclick="triggerNotification()" class="relative p-2.5 rounded-xl bg-zinc-800/80 hover:bg-zinc-700 transition border border-zinc-700">
+                            <i class="fa-regular fa-bell text-sm text-zinc-300"></i>
+                            <span id="notifBadge" class="absolute top-1 right-1 w-2 h-2 bg-zinc-200 rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)]"></span>
+                        </button>
+                        <button onclick="handleLogout()" title="Keluar" class="p-2.5 rounded-xl bg-zinc-800/80 hover:bg-rose-950/40 text-rose-400 transition border border-zinc-700">
+                            <i class="fa-solid fa-power-off text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- SCROLLABLE FEED & FINANCE CONTENT -->
+            <main class="flex-1 overflow-y-auto no-scrollbar px-5 py-5 space-y-5 pb-24">
+                <!-- FORM POSTING -->
+                <div class="steel-card p-4 rounded-2xl space-y-3">
+                    <h3 class="text-xs font-mono font-semibold text-zinc-300 uppercase tracking-wider">Buat Postingan Sosial</h3>
+                    <textarea id="postContent" placeholder="Bagikan aktivitas atau tips keuanganmu..." class="w-full steel-input rounded-xl p-3 text-xs focus:outline-none resize-none h-20"></textarea>
+                    <div class="flex items-center justify-between">
+                        <label class="cursor-pointer bg-zinc-800 hover:bg-zinc-700 text-zinc-300 px-3 py-2 rounded-xl text-xs flex items-center space-x-2 transition border border-zinc-700 font-mono">
+                            <i class="fa-solid fa-image text-zinc-400"></i>
+                            <span id="fileLabel">Pilih Foto</span>
+                            <input type="file" id="postImageFile" accept="image/*" class="hidden" onchange="updateFileLabel()">
+                        </label>
+                        <button onclick="createPost()" class="steel-button text-zinc-950 font-bold px-4 py-2 rounded-xl text-xs uppercase tracking-wider">
+                            Kirim Post
+                        </button>
+                    </div>
+                </div>
+
+                <!-- LIVE FEED -->
+                <div>
+                    <h3 class="text-xs font-mono font-semibold text-zinc-300 uppercase tracking-wider mb-3">Feed Komunitas</h3>
+                    <div id="socialFeed" class="space-y-4">
+                        <p class="text-xs text-zinc-500 text-center py-4 font-mono">Memuat feed komunitas...</p>
+                    </div>
+                </div>
+            </main>
+
+            <!-- BOTTOM NAVIGATION -->
+            <nav class="absolute bottom-0 left-0 right-0 h-16 bg-zinc-900/95 backdrop-blur-xl border-t border-zinc-800 px-3 flex justify-around items-center z-50">
+                <a href="#" class="flex flex-col items-center text-zinc-100"><i class="fa-solid fa-house text-lg"></i><span class="text-[10px] mt-1 font-mono font-medium">Home</span></a>
+                <a href="#" class="flex flex-col items-center text-zinc-400 hover:text-zinc-100"><i class="fa-solid fa-globe text-lg"></i><span class="text-[10px] mt-1 font-mono font-medium">Social</span></a>
+                <button class="w-12 h-12 steel-button text-zinc-950 rounded-full flex items-center justify-center shadow-lg -mt-5 border border-zinc-400"><i class="fa-solid fa-plus text-lg font-bold"></i></button>
+                <a href="#" class="flex flex-col items-center text-zinc-400 hover:text-zinc-100"><i class="fa-solid fa-comments text-lg"></i><span class="text-[10px] mt-1 font-mono font-medium">Chat</span></a>
+                <a href="#" class="flex flex-col items-center text-zinc-400 hover:text-zinc-100"><i class="fa-solid fa-wallet text-lg"></i><span class="text-[10px] mt-1 font-mono font-medium">Finance</span></a>
+                <a href="#" class="flex flex-col items-center text-zinc-400 hover:text-zinc-100"><i class="fa-solid fa-user text-lg"></i><span class="text-[10px] mt-1 font-mono font-medium">Profile</span></a>
+            </nav>
+        </div>
+
+    </div>
+
+    <!-- External Script JS -->
+    <script type="module" src="script.js"></script>
+</body>
+  </html>
+  
